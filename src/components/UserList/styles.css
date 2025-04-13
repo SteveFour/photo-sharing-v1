@@ -1,0 +1,12 @@
+.user-list-title {
+  padding: 16px;
+  font-weight: 500;
+}
+
+.user-list-item {
+  padding: 10px 16px;
+}
+
+.user-list-item:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}

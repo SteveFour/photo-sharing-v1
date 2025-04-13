@@ -1,0 +1,35 @@
+.photos-container {
+  padding: 16px;
+}
+
+.photo-card {
+  margin-bottom: 24px;
+}
+
+.photo-image {
+  max-height: 400px;
+  object-fit: contain;
+}
+
+.comments-header {
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.comment-item {
+  padding: 8px 0;
+}
+
+.comment-user-link {
+  color: #1976d2;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.comment-user-link:hover {
+  text-decoration: underline;
+}
+
+.photo-message {
+  padding: 16px;
+}
