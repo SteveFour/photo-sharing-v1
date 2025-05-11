@@ -1,4 +1,5 @@
-import React from "react";
+// components/UserDetail/index.jsx
+import React, { useState, useEffect } from "react";
 import {
   Typography,
   Card,
@@ -7,20 +8,42 @@ import {
   CardActions,
 } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
-import models from "../../modelData/models";
+import fetchModel from "../../lib/fetchModelData";
 import "./styles.css";
 
-/**
- * Define UserDetail, a React component of Project 4.
- */
 function UserDetail() {
   const { userId } = useParams();
-  const user = models.userModel(userId);
-  
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    setLoading(true);
+    fetchModel(`/api/user/${userId}`, (err, data) => {
+      if (err) {
+        console.error("Error fetching user detail:", err);
+        setError(err);
+      } else {
+        setUser(data);
+      }
+      setLoading(false);
+    });
+  }, [userId]);
+
+  if (loading) {
+    return <Typography>Loading user details…</Typography>;
+  }
+  if (error) {
+    return (
+      <Typography color="error">
+        Failed to load user details for ID {userId}.
+      </Typography>
+    );
+  }
   if (!user) {
     return (
-      <Typography variant="body1">
-        User with ID {userId} not found.
+      <Typography>
+        User with ID <strong>{userId}</strong> not found.
       </Typography>
     );
   }
@@ -43,10 +66,10 @@ function UserDetail() {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button 
-            component={Link} 
-            to={`/photos/${userId}`} 
-            variant="contained" 
+          <Button
+            component={Link}
+            to={`/photos/${userId}`}
+            variant="contained"
             color="primary"
           >
             View Photos

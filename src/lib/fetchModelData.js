@@ -1,21 +1,13 @@
-/**
- * fetchModel - Fetch a model from the web server.
- *
- * @param {string} url      The URL to issue the GET request.
- *
- */
-function fetchModel(url) {
-  return fetch(url)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .catch((error) => {
-      console.error("Error fetching data:", error);
-      return null;
-    });
-}
+// lib/fetchModelData.js
+export default function fetchModel(path, callback) {
+  const base = process.env.REACT_APP_API_BASE || "";
 
-export default fetchModel;
+  const url = `${base}${path}`;
+  fetch(url)
+    .then((res) => {
+      if (!res.ok) throw new Error(res.statusText);
+      return res.json();
+    })
+    .then((data) => callback(null, data))
+    .catch((err) => callback(err, null));
+}
